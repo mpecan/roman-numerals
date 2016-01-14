@@ -67,7 +67,4 @@ class ConverterTest < Minitest::Test
   def test_negative_numbers
     assert_equal 'The input must be between 1 and 3999', Converter.new('-10').to_roman_numerals
   end
-
-
 end
-
