@@ -86,4 +86,10 @@ class ConverterTest < Minitest::Test
   def test_negative_numbers
     assert_equal 'The input must be between 1 and 3999', Converter.new('-10').to_roman_numerals
   end
+
+  def test_max_lines
+    lines = `wc -l "converter.rb"`.strip.split(' ')[0].to_i
+    assert lines < 50, "Solution has too many lines #{lines}, expected 50 or less."
+  end
+
 end
