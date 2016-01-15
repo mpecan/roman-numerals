@@ -24,6 +24,24 @@ require_relative 'converter'
 
 class ConverterTest < Minitest::Test
 
+  {'1':'I', '3':'III', '5':'V', '10':'X', '30':'XXX', '50':'L', '100':'C', '500': 'D', '1000':'C'}.each do |key, value|
+    define_method("convert_#{key}_to_#{value}"){
+      assert_equal value, Converter.new(key).to_roman_numerals
+    }
+    define_method("convert_#{value}_to_#{key}"){
+      assert_equal key, Converter.new(value).to_arabic_number
+    }
+  end
+
+  {'4':'IV', '9':'IX', '19':'XIX', '40':'XL', '90':'XC', '400':'CL', '900':'CM'}.each do |key, value|
+    define_method("convert_#{key}_to_#{value}"){
+      assert_equal value, Converter.new(key).to_roman_numerals
+    }
+    define_method("convert_#{value}_to_#{key}"){
+      assert_equal key, Converter.new(value).to_arabic_number
+    }
+  end
+
   def test_MMDCCLV_to_1755
     assert_equal '2755', Converter.new('MMDCCLV').to_arabic_number
   end
