@@ -1,20 +1,7 @@
-class Converter
-  CONVERSIONS = {
-    1000 => 'M',
-    900  => 'CM',
-    500  => 'D',
-    400  => 'CD',
-    100  => 'C',
-    90   => 'XC',
-    50   => 'L',
-    40   => 'XL',
-    10   => 'X',
-    9    => 'IX',
-    5    => 'V',
-    4    => 'IV',
-    1    => 'I'
-  }
+require 'yaml'
 
+class Converter
+  CONVERSIONS = YAML::load(File.open('conversions.yml'))
   attr_reader :input
 
   def initialize(input)
@@ -26,8 +13,7 @@ class Converter
       return 'The input must be between 1 and 3999' 
     end
 
-    arabic_number = input
-    result        = ''
+    arabic_number, result = input, ''
 
     CONVERSIONS.keys.each do |number|
       while arabic_number >= number
@@ -41,8 +27,7 @@ class Converter
   def to_arabic_number
     return input if input.is_a? Integer
 
-    roman_numerals = input
-    result          = 0
+    roman_numerals, result = input, 0
 
     CONVERSIONS.values.each do |roman_symbol|
       while roman_numerals.start_with? roman_symbol
@@ -51,6 +36,7 @@ class Converter
         result += CONVERSIONS.key roman_symbol
       end
     end
+
     result
   end
 end
