@@ -1,21 +1,3 @@
-# Meaning
-# I => 1
-# V => 5
-# X => 10
-# L => 50
-# C => 100
-# D => 500
-# M => 1000
-
-# Rules
-# 1) The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row
-# 2) The symbols 'V', 'L', and 'D' can never be repeated
-# 3) The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 2 next
-#    highest values ('IV' and 'IX', 'XL' and 'XC', 'CD' and 'CM').
-# 4) Only one subtraction can be made per numeral
-#    ('XC' is allowed, 'XXC' is not).
-# 5) The '5' symbols ('V', 'L', and 'D') can never be subtracted.
-
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!

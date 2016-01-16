@@ -31,12 +31,10 @@ class Converter
 
     CONVERSIONS.values.each do |roman_symbol|
       while roman_numerals.start_with? roman_symbol
-        roman_numerals = roman_numerals
-                            .slice(roman_symbol.length, roman_numerals.length)
+        roman_numerals = roman_numerals.slice(roman_symbol.length, roman_numerals.length)
         result += CONVERSIONS.key roman_symbol
       end
     end
-
     result
   end
 end
