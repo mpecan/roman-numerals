@@ -1,4 +1,20 @@
 class Converter
+  CONVERSIONS = {
+    1    => 'I',
+    4    => 'IV',
+    5    => 'V',
+    9    => 'IX',
+    10   => 'X',
+    40   => 'XL',
+    50   => 'L',
+    90   => 'XC',
+    100  => 'C',
+    400  => 'CD',
+    500  => 'D',
+    900  => 'CM',
+    1000 => 'M'
+  }
+
   attr_reader :input
 
   def initialize(input)
@@ -24,72 +40,22 @@ class Converter
   end
 
   def to_arabic_number
-    thousands = input.scan(/M{0,3}/).first
-    hundreds  = input.scan(/CM|DC{0,3}|CD|C{1,3}/).first
-    tens      = input.scan(/XC|LX{0,3}|XL|X{1,3}/).first
-    ones      = input.scan(/IX|VI{0,3}|IV|I{1,3}/).first
+    return input if input.is_a? Integer
 
-    result = []
+    roman_numerals = input
+    result          = 0
 
-    arabic_thousands_to_roman thousands, result
-    arabic_hundreds_to_roman  hundreds,  result
-    arabic_tens_to_roman      tens,      result
-    arabic_ones_to_roman      ones,      result
-
-    result.join
+    CONVERSIONS.values.reverse.each do |roman_symbol|
+      while roman_numerals.start_with? roman_symbol
+        roman_numerals = roman_numerals
+                            .slice(roman_symbol.length, roman_numerals.length)
+        result += CONVERSIONS.key roman_symbol
+      end
+    end
+    result
   end
 
   private
-
-  def arabic_ones_to_roman(symbol, result)
-    result << case symbol
-    when 'I'    then '1'
-    when 'II'   then '2'
-    when 'III'  then '3'
-    when 'IV'   then '4'
-    when 'V'    then '5'
-    when 'VI'   then '6'
-    when 'VII'  then '7'
-    when 'VIII' then '8'
-    when 'IX'   then '9'
-    end
-  end
-
-  def arabic_tens_to_roman(symbol, result)
-    result << case symbol
-    when 'X'    then '1'
-    when 'XX'   then '2'
-    when 'XXX'  then '3'
-    when 'XL'   then '4'
-    when 'L'    then '5'
-    when 'LX'   then '6'
-    when 'LXX'  then '7'
-    when 'LXXX' then '8'
-    when 'XC'   then '9'
-    end
-  end
-
-  def arabic_hundreds_to_roman(symbol, result)
-    result << case symbol
-    when 'C'    then '1'
-    when 'CC'   then '2'
-    when 'CCC'  then '3'
-    when 'CD'   then '4'
-    when 'D'    then '5'
-    when 'DC'   then '6'
-    when 'DCC'  then '7'
-    when 'DCCC' then '8'
-    when 'CM'   then '9'
-    end
-  end
-
-  def arabic_thousands_to_roman(symbol, result)
-    result << case symbol
-    when 'M'   then '1'
-    when 'MM'  then '2'
-    when 'MMM' then '3'
-    end
-  end
 
   def roman_ones(number)
     case number
